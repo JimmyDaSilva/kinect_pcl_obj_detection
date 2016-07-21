@@ -1,0 +1,22 @@
+<launch>
+
+  <arg name="kinect_name" default="kinectV2" />  
+  <arg name="voxel_size" default="0.1" />  
+
+  <!-- Nodelet manager for this pipeline --> 
+  <node pkg="nodelet" type="nodelet" args="manager"
+        name="downsample_$(arg kinect_name)_record_player_manager" output="screen" />
+
+  <!-- Nodelet to clean NaNs and downsample the pointcloud  	-->
+  <node pkg="nodelet" type="nodelet" name="$(arg kinect_name)_downsample" 
+				args="load pcl/VoxelGrid downsample_$(arg kinect_name)_record_player_manager" output="screen"> 
+		<remap from="~input" to="$(arg kinect_name)/qhd/points" />
+		<remap from="~output" to="$(arg kinect_name)/qhd/points_downsampled" />
+    <rosparam param="filter_field_name">z</rosparam>
+    <rosparam param="filter_limit_min">0.5</rosparam>
+    <rosparam param="filter_limit_max">4.0</rosparam>
+    <rosparam param="filter_limit_negative">False</rosparam>
+    <rosparam param="leaf_size">$(arg voxel_size)</rosparam>
+  </node>
+
+</launch>

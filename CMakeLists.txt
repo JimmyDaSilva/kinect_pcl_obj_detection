@@ -3,11 +3,11 @@ project(kinect_pcl_obj_detection)
 
 set(CMAKE_BUILD_TYPE Release)
 
-## Find non-catkin packages
-find_package(PCL 1.7 REQUIRED)
-include_directories(${PCL_INCLUDE_DIRS})
-include_directories(${PCL_LIBRARY_DIRS})
-add_definitions(${PCL_DEFINITIONS})
+# ## Find non-catkin packages
+# find_package(PCL 1.7 REQUIRED)
+# include_directories(${PCL_INCLUDE_DIRS})
+# include_directories(${PCL_LIBRARY_DIRS})
+# add_definitions(${PCL_DEFINITIONS})
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -148,6 +148,11 @@ include_directories(
 
 ## Declare a C++ executable
 add_executable(simple_segmentation src/object_detection.cpp)
+add_executable(template_alignment src/template_alignment.cpp)
+add_executable(euclidian_clustering src/euclidian_clustering.cpp)
+add_executable(correspondence_grouping src/correspondence_grouping.cpp)
+add_executable(pcl_shot_descriptors_matching src/pcl_shot_descriptors_matching.cpp)
+add_executable(pcl_fpfh_descriptors_matching src/pcl_fpfh_descriptors_matching.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -155,6 +160,14 @@ add_executable(simple_segmentation src/object_detection.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(simple_segmentation ${catkin_LIBRARIES})
+target_link_libraries(template_alignment ${catkin_LIBRARIES})
+target_link_libraries(euclidian_clustering ${catkin_LIBRARIES})
+# target_link_libraries(correspondence_grouping ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+# target_link_libraries(pcl_shot_descriptors_matching ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+# target_link_libraries(pcl_fpfh_descriptors_matching ${catkin_LIBRARIES} ${PCL_LIBRARIES})
+target_link_libraries(correspondence_grouping ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
+target_link_libraries(pcl_shot_descriptors_matching ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
+target_link_libraries(pcl_fpfh_descriptors_matching ${catkin_LIBRARIES} libvtkCommon.so libvtkFiltering.so)
 
 #############
 ## Install ##

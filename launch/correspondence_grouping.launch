@@ -1,0 +1,11 @@
+<launch>
+
+  <arg name="model" default="$(find kinect_pcl_obj_detection)/data/robot_0.03.pcd" />
+  <arg name="scene" default="$(find kinect_pcl_obj_detection)/data/kinect.pcd" />
+
+  <!--arg name="model" default="$(find kinect_pcl_obj_detection)/data/milk.pcd" />
+  <arg name="scene" default="$(find kinect_pcl_obj_detection)/data/milk_cartoon_all_small_clorox.pcd" /-->
+  
+  <node name="correspondence_grouping" pkg="kinect_pcl_obj_detection" type="correspondence_grouping" output="screen" args="$(arg model) $(arg scene)" />
+
+</launch>
